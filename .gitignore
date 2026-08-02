@@ -2,11 +2,6 @@ node_modules/
 dist/
 .asset-stage/
 
-# Baked by `npm run assets` from frame/ and Logo/ — regenerate, don't commit.
-# The hd tier alone is ~15 MB across 720 files.
-public/frames/
-public/stills/
-public/brand/
 
 *.local
 .DS_Store
