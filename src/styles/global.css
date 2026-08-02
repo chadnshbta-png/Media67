@@ -1,0 +1,170 @@
+@import './tokens.css';
+
+/* ---- Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--c-black);
+}
+
+body {
+  min-height: 100svh;
+  background-color: var(--c-black);
+  color: var(--c-text);
+  font-family: var(--font);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+canvas,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--c-white);
+  color: var(--c-black);
+}
+
+:focus-visible {
+  outline: 1px solid var(--c-white);
+  outline-offset: 4px;
+}
+
+/* ---- Smooth scroll ------------------------------------------------------ */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Hard lock for the duration of the hero film. */
+html[data-scroll-locked],
+html[data-scroll-locked] body {
+  overflow: clip;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+/* ---- Primitives --------------------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+
+.label::before {
+  content: '';
+  width: clamp(28px, 4vw, 64px);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.display {
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-wrap: balance;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+/*
+ * Note: deliberately no `content-visibility: auto` on sections. It zeroes the
+ * rects of skipped descendants, which silently corrupts every ScrollTrigger
+ * start/end measured against them. Below-the-fold cost is handled where it
+ * actually is — lazy, async-decoded imagery.
+ */
+
+/*
+ * A line of type that rises out of a mask. The wrapper clips; the child is what
+ * animates, so the reveal reads as film emerging rather than text sliding.
+ */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.line-mask > span {
+  display: block;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,115 @@
+/*
+ * Three statements, three moments. Not three cards.
+ * Animation identity here is scale + mask: each value grows into focus, holds
+ * the screen alone, then passes the viewer as it scales up and out.
+ */
+.why {
+  position: relative;
+  padding-block: 0;
+}
+
+.stage {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
+  background: var(--c-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.head {
+  position: absolute;
+  top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3rem));
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding-inline: var(--gutter);
+  max-width: var(--max-w);
+  margin-inline: auto;
+}
+
+.moments {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-w);
+  padding-inline: var(--gutter);
+}
+
+.moment {
+  position: absolute;
+  inset-inline: var(--gutter);
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  will-change: opacity, transform;
+}
+
+/* The index sits behind the words, enormous and almost gone — it gives the
+   statement somewhere to stand without adding another line of type. */
+.ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -54%;
+  z-index: -1;
+  font-size: clamp(14rem, min(42vw, 62vh), 34rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: rgba(255, 255, 255, 0.032);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.title {
+  display: block;
+  font-size: clamp(2.6rem, min(9.5vw, 16vh), 9rem);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  will-change: transform;
+}
+
+.copy {
+  margin-top: clamp(1.25rem, 3.5vh, 2.5rem);
+  max-width: 32ch;
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.66);
+  will-change: opacity, transform;
+}
+
+/* ---- Rail --------------------------------------------------------------- */
+
+.rail {
+  position: absolute;
+  bottom: clamp(2rem, 6vh, 3.5rem);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 3;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.tick {
+  display: block;
+  width: clamp(26px, 4vw, 52px);
+  height: 1px;
+  background: var(--c-white);
+  opacity: 0.2;
+  transform-origin: 0 50%;
+  will-change: transform, opacity;
+}

@@ -1,0 +1,69 @@
+/*
+ * Media Six Seven — design tokens.
+ *
+ * Three values of ink and nothing else. The palette is deliberately incapable
+ * of introducing an accent colour, so contrast has to come from scale, spacing
+ * and the imagery itself.
+ */
+
+:root {
+  /* ---- Ink ------------------------------------------------------------- */
+  --c-black: #000000;
+  --c-white: #ffffff;
+
+  /* Greys used only for depth on black, never as a brand colour. */
+  --c-surface: #050505;
+  --c-surface-raised: #0c0c0c;
+
+  --c-text: #ffffff;
+  --c-text-soft: rgba(255, 255, 255, 0.62);
+  --c-text-mute: rgba(255, 255, 255, 0.38);
+  --c-text-faint: rgba(255, 255, 255, 0.22);
+
+  --c-line: rgba(255, 255, 255, 0.14);
+  --c-line-soft: rgba(255, 255, 255, 0.07);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font: 'Archivo Variable', 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Display sizes are viewport-driven so the type stays edge-to-edge huge at
+     every width rather than shrinking into a column.
+
+     The hero size answers to height as well as width: it sets inside a full
+     viewport alongside a mark, a paragraph, a button and a scroll cue, and on
+     a short laptop window a purely width-driven size crowds all of them. */
+  --t-hero: clamp(2.9rem, min(9.2vw, 14.5vh), 10.5rem);
+  --t-display: clamp(2.5rem, 8vw, 9rem);
+  --t-statement: clamp(1.9rem, 4.6vw, 5.25rem);
+  --t-title: clamp(1.75rem, 3.4vw, 3.75rem);
+  --t-lead: clamp(1.0625rem, 1.45vw, 1.5rem);
+  --t-body: clamp(0.9375rem, 1.05vw, 1.0625rem);
+  --t-label: 0.6875rem;
+
+  --lh-tight: 0.92;
+  --lh-snug: 1.04;
+  --lh-body: 1.62;
+
+  --ls-display: -0.035em;
+  --ls-title: -0.02em;
+  --ls-label: 0.22em;
+
+  /* ---- Space ----------------------------------------------------------- */
+  --gutter: clamp(1.25rem, 4.5vw, 5.5rem);
+  --section-y: clamp(6rem, 15vh, 13rem);
+  --max-w: 1720px;
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-travel: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- Chrome ---------------------------------------------------------- */
+  --header-h: clamp(64px, 7vh, 84px);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --lh-tight: 0.98;
+    --ls-display: -0.025em;
+  }
+}

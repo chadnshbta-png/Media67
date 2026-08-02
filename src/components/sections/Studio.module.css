@@ -1,0 +1,84 @@
+.studio {
+  position: relative;
+  padding-top: clamp(8rem, 22vh, 18rem);
+  overflow: clip;
+}
+
+/*
+ * A single, very slow bloom of light drifting behind the words — the only
+ * background motion in the section. At 5% it is felt rather than seen; its job
+ * is to stop the black from reading as a dead surface after the film.
+ */
+.bloom {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: min(140vw, 1600px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(255, 255, 255, 0.02) 34%,
+    transparent 68%
+  );
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(3rem, 9vh, 7rem);
+}
+
+.statement {
+  font-size: var(--t-statement);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-display);
+  max-width: 19ch;
+  /* The focus pull is a filter animation on this one node rather than on each
+     word — one promoted layer instead of a dozen. */
+  will-change: filter;
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+}
+
+.body {
+  justify-self: end;
+  max-width: 46ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--c-text-soft);
+}
+
+/* Each paragraph rises out of its own mask — responsive-safe, unlike splitting
+   body copy into authored lines. */
+.para {
+  display: block;
+  overflow: hidden;
+}
+
+.para > span {
+  display: block;
+}
+
+@media (min-width: 961px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: end;
+    column-gap: clamp(3rem, 6vw, 7rem);
+    row-gap: clamp(4rem, 10vh, 8rem);
+  }
+
+  .labelRow {
+    grid-column: 1 / -1;
+  }
+}

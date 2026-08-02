@@ -1,0 +1,27 @@
+/*
+ * One mark, one element, for the whole page. Fixed to the viewport and driven
+ * from the film's playhead — never duplicated, never cross-faded between two
+ * copies. Opacity and pointer-events are written by the component each frame.
+ */
+.mark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* The entrance breath lives here so it cannot fight the transform the dock is
+   writing to the outer node. */
+.inner {
+  display: block;
+  transform-origin: 50% 50%;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}

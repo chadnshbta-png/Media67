@@ -1,0 +1,199 @@
+/*
+ * The hero is one viewport tall and stays pinned while the film is scrubbed
+ * beneath it. Everything inside is absolutely placed so the composition never
+ * reflows as words arrive — a word that has not been revealed yet still holds
+ * its space, hidden inside its mask.
+ */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
+  background: var(--c-black);
+}
+
+.canvas,
+.still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--c-black);
+}
+
+.still {
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+/*
+ * Legibility, weighted to the middle where the type sits. Its opacity is set
+ * per frame from the film's measured luminance, so it is nearly absent through
+ * the dark lens act and firm over the sunrise aerial.
+ */
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 82% 66% at 50% 48%,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.55) 52%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding: calc(var(--header-h) + 2rem) var(--gutter) clamp(7.5rem, 20vh, 12rem);
+  text-align: center;
+  pointer-events: none;
+}
+
+.content > * {
+  pointer-events: auto;
+}
+
+.brandSlot {
+  width: clamp(108px, 11.5vw, 178px);
+  aspect-ratio: 800 / 376;
+  pointer-events: none;
+}
+
+/* ---- Headline ----------------------------------------------------------- */
+
+.headline {
+  font-size: var(--t-hero);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  max-width: 18ch;
+}
+
+.line {
+  display: block;
+}
+
+/* Each word is its own mask, so each can enter on its own frame. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Room for descenders and the full-stop, which the mask would otherwise clip. */
+  padding-bottom: 0.09em;
+  margin-bottom: -0.09em;
+}
+
+.word:not(:last-child) {
+  margin-right: 0.26em;
+}
+
+.word > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+.lead {
+  max-width: 34ch;
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  /* Brighter than body copy elsewhere: this one has to hold against a sunrise. */
+  color: rgba(255, 255, 255, 0.82);
+  text-wrap: balance;
+}
+
+/* ---- Scroll cue --------------------------------------------------------- */
+
+.cue {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(1.75rem, 4.5vh, 3rem);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--c-text-mute);
+  pointer-events: none;
+}
+
+.cueLabel {
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.cueTrack {
+  position: relative;
+  width: 1px;
+  height: clamp(38px, 6vh, 58px);
+  background: var(--c-line-soft);
+  overflow: hidden;
+}
+
+/* A single point of light falling down the track — the one thing on the page
+   that moves without being scrolled, because it is the invitation to scroll. */
+.cueTrack::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, var(--c-white));
+  animation: fall 2.8s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  55%,
+  100% {
+    transform: translateY(230%);
+  }
+}
+
+@media (max-width: 720px) {
+  .headline {
+    max-width: 12ch;
+  }
+
+  .lead {
+    max-width: 26ch;
+  }
+}
+
+/*
+ * Short windows — laptops at 1440x900 with browser chrome, landscape phones.
+ * The mark and the rhythm between elements give up space first; the headline
+ * is already height-aware through --t-hero.
+ */
+@media (max-height: 720px) {
+  .content {
+    gap: clamp(0.9rem, 3vh, 1.75rem);
+    padding-bottom: clamp(6rem, 17vh, 8.5rem);
+  }
+
+  .brandSlot {
+    width: clamp(88px, 8vw, 128px);
+  }
+
+  .cue {
+    gap: 0.6rem;
+    bottom: clamp(1.25rem, 3.5vh, 2rem);
+  }
+
+  .cueTrack {
+    height: clamp(28px, 4.5vh, 40px);
+  }
+}

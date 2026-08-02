@@ -1,0 +1,177 @@
+/*
+ * The process is not a list. It is five scenes, pinned, each taking the screen
+ * in turn: the stage you are on is sharp and lit, the one you left has receded
+ * out of focus, and the next is already forming underneath.
+ */
+/* Pinned sections must refresh in document order — see refreshPriority in the
+   hero. Order here: hero 5, process 4, portal 3, work 2, why 1. */
+.process {
+  position: relative;
+  padding-block: 0;
+}
+
+.stage {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: clip;
+  background: var(--c-black);
+}
+
+/* ---- Backdrops ---------------------------------------------------------- */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Holds the imagery well below the type without flattening it to grey. */
+.backdropVeil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.72) 46%,
+      rgba(0, 0, 0, 0.42) 100%
+    ),
+    radial-gradient(ellipse 90% 80% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* ---- Frames ------------------------------------------------------------- */
+
+.head {
+  position: absolute;
+  top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3rem));
+  left: 0;
+  right: 0;
+  padding-inline: var(--gutter);
+  max-width: var(--max-w);
+  margin-inline: auto;
+  z-index: 3;
+}
+
+.frames {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding-inline: var(--gutter);
+}
+
+.frameWrap {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+}
+
+/* All five stack in the same place; only one is ever resolved. */
+.frame {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  translate: 0 -50%;
+  /* Wide enough that the supporting line reads in two, not four — the title
+     is what is huge here, not the column. */
+  max-width: min(46ch, 52vw);
+  will-change: opacity, transform, filter;
+}
+
+.n {
+  display: block;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-text-mute);
+  margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
+}
+
+.title {
+  font-size: clamp(3rem, min(11vw, 17vh), 11rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+}
+
+.copy {
+  margin-top: clamp(1.25rem, 3vh, 2.25rem);
+  max-width: 34ch;
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ---- Chapter rail ------------------------------------------------------- */
+
+.rail {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9rem, 2.4vh, 1.6rem);
+  align-items: flex-end;
+}
+
+.railItem {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.railName {
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+  will-change: color, opacity;
+}
+
+.railTick {
+  display: block;
+  width: clamp(18px, 2.4vw, 34px);
+  height: 1px;
+  background: var(--c-white);
+  opacity: 0.22;
+  transform-origin: 100% 50%;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 860px) {
+  .frame {
+    max-width: none;
+  }
+
+  .railName {
+    display: none;
+  }
+
+  .rail {
+    gap: 0.75rem;
+  }
+
+  .backdropVeil {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.68) 50%,
+        rgba(0, 0, 0, 0.55) 100%
+      ),
+      radial-gradient(ellipse 95% 75% at 50% 50%, transparent 25%, rgba(0, 0, 0, 0.55) 100%);
+  }
+}

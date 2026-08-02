@@ -1,0 +1,11 @@
+/* Clips the label so it rises into place rather than fading on. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+.mask > p {
+  will-change: transform;
+}

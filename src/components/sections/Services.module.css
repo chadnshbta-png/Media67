@@ -1,0 +1,160 @@
+.list {
+  margin-top: clamp(3rem, 9vh, 6rem);
+}
+
+.item {
+  position: relative;
+  isolation: isolate;
+}
+
+/* A breath of light rather than a card. The panel reads as lit, not as a box. */
+.item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.035);
+  opacity: 0;
+  transition: opacity 0.55s var(--ease-reveal);
+}
+
+/* Drawn in on arrival, so the list builds line by line. */
+.rule {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: var(--c-line-soft);
+  transform-origin: 0 50%;
+}
+
+/* Closes the list. Static, because there is no row after it to draw it in. */
+.list > .item:last-child {
+  border-bottom: 1px solid var(--c-line-soft);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.7rem;
+  padding: clamp(2rem, 6vh, 3.4rem) 0;
+  transition: padding-inline 0.7s var(--ease-reveal);
+}
+
+.n {
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-text-mute);
+}
+
+.titleMask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.title {
+  display: block;
+  font-size: var(--t-title);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: var(--ls-title);
+  transition: transform 0.75s var(--ease-reveal);
+  will-change: transform;
+}
+
+.copy {
+  max-width: 34ch;
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--c-text-soft);
+}
+
+/* Shown only where there is no cursor to follow. */
+.inlineMedia {
+  margin-top: 1.4rem;
+  aspect-ratio: 16 / 9;
+  overflow: clip;
+}
+
+.inlineMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Cursor-carried still ----------------------------------------------- */
+
+.pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: clamp(240px, 23vw, 400px);
+  aspect-ratio: 16 / 9;
+  overflow: clip;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Drifts inside the frame as the plate is carried — the depth cue that makes
+   it read as an object with a surface rather than a floating thumbnail. */
+.pointerInner {
+  position: absolute;
+  inset: -6% -8%;
+  will-change: transform;
+}
+
+.pointerImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-reveal);
+}
+
+.pointerImgActive {
+  opacity: 1;
+}
+
+@media (min-width: 861px) {
+  .row {
+    grid-template-columns: clamp(4rem, 8vw, 9rem) minmax(0, 1fr) minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .n {
+    padding-top: 0.35em;
+  }
+
+  /* Left-aligned inside its own column: ending the column flush right leaves
+     every row with a different left edge, which reads as an accident. */
+  .copy {
+    max-width: 34ch;
+  }
+
+  .inlineMedia {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (min-width: 861px) {
+  .item:hover::before {
+    opacity: 1;
+  }
+
+  .item:hover .title {
+    transform: translateX(clamp(10px, 1.6vw, 30px));
+  }
+
+  .item:hover .row {
+    padding-inline: clamp(10px, 1.6vw, 30px);
+  }
+}
